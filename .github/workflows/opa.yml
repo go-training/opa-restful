@@ -1,0 +1,40 @@
+name: Open Policy Agent Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download OPA Binary
+        if: startsWith(matrix.os, 'macOS')
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_darwin_amd64
+          chmod +x opa
+          ./opa -h
+
+      - name: Download OPA Binary
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          curl -L -o opa https://openpolicyagent.org/downloads/latest/opa_linux_amd64
+          chmod +x opa
+          ./opa -h
+
+      - name: Run Testing
+        run: |
+          ./opa test -v *.rego

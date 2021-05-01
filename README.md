@@ -1,6 +1,5 @@
 # opa-resful
 
-[![Run Tests](https://github.com/go-training/opa-restful/actions/workflows/go.yml/badge.svg)](https://github.com/go-training/opa-restful/actions/workflows/go.yml)
 [![Open Policy Agent Testing](https://github.com/go-training/opa-restful/actions/workflows/opa.yml/badge.svg)](https://github.com/go-training/opa-restful/actions/workflows/opa.yml)
 
 ## Integrating with the REST API
