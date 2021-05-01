@@ -2,6 +2,10 @@
 
 [![Open Policy Agent Testing](https://github.com/go-training/opa-restful/actions/workflows/opa.yml/badge.svg)](https://github.com/go-training/opa-restful/actions/workflows/opa.yml)
 
+## System Flow
+
+![flow](./images/flow.png)
+
 ## Integrating with the REST API
 
 ### Run Open Policy Server
@@ -18,7 +22,7 @@ $ opa run --server
 Uploading the role permission and group data:
 
 ```sh
-curl -X PUT http://localhost:8181/v1/data/rbac/authz/acl --data-binary @opa/data.json
+curl -X PUT http://localhost:8181/v1/data/rbac/authz/acl --data-binary @data.json
 ```
 
 See the data with `JSON` format:
@@ -98,7 +102,7 @@ See the data with `JSON` format:
 ### Upload policy data
 
 ```sh
-curl -X PUT http://localhost:8181/v1/policies/rbac.authz --data-binary @rbac/rbac.authz.rego
+curl -X PUT http://localhost:8181/v1/policies/rbac.authz --data-binary @rbac.authz.rego
 ```
 
 See the rego data
@@ -134,7 +138,7 @@ allow {
 ### Testing your input
 
 ```sh
-curl -X POST http://localhost:8181/v1/data/rbac/authz/allow --data-binary @rbac/input.json
+curl -X POST http://localhost:8181/v1/data/rbac/authz/allow --data-binary @input.json
 ```
 
 See the input data with `JSON` format.
