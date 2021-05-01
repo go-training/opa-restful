@@ -1,0 +1,7 @@
+{
+  "input": {
+    "user": ["design_group_kpi_editor", "system_group_kpi_editor"],
+    "action": "edit",
+    "object": "design"
+  }
+}
