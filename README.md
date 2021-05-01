@@ -139,8 +139,36 @@ allow {
 
 ### Testing your input
 
+Using [curl](https://curl.se/) tool.
+
 ```sh
 curl -X POST http://localhost:8181/v1/data/rbac/authz/allow --data-binary @input.json
+```
+
+Using [bat](https://github.com/astaxie/bat) tool.
+
+```sh
+$ bat POST http://localhost:8181/v1/data/rbac/authz/allow < input.json
+POST /v1/data/rbac/authz/allow HTTP/1.1
+Host: localhost:8181
+Accept: application/json
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+User-Agent: bat/0.1.0
+
+
+{"input":{"action":"edit","object":"design","user":["design_group_kpi_editor","system_group_kpi_editor"]}}
+
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Sat, 01 May 2021 08:43:30 GMT
+Content-Length: 15
+
+
+{
+  "result": true
+}
 ```
 
 See the input data with `JSON` format.
