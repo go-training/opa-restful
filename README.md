@@ -8,6 +8,8 @@
 
 ## Integrating with the REST API
 
+This document is the authoritative specification of the [OPA REST API](https://www.openpolicyagent.org/docs/latest/rest-api/).
+
 ### Run Open Policy Server
 
 Please execute the following command:
