@@ -12,7 +12,7 @@ This document is the authoritative specification of the [OPA REST API](https://w
 
 ### Run Open Policy Server
 
-Please execute the following command:
+Run OPA server using the following command:
 
 ```sh
 $ opa run --server
@@ -97,6 +97,74 @@ See the data with `JSON` format:
       {"action": "view_all", "object": "system"}
     ],
     "viewer_limit_m": [{"action": "view_l3_project", "object": "manufacture"}]
+  }
+}
+```
+
+Try to fetch group roles data:
+
+```sh
+# curl tool
+$ curl http://localhost:8181/v1/data/rbac/authz/acl/group_roles | jq
+# or bat tool
+$ bat GET http://localhost:8181/v1/data/rbac/authz/acl/group_roles
+```
+
+See the result:
+
+```sh
+$ curl http://localhost:8181/v1/data/rbac/authz/acl/group_roles | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   661  100   661    0     0   107k      0 --:--:-- --:--:-- --:--:--  107k
+{
+  "result": {
+    "admin": [
+      "admin"
+    ],
+    "design_group_kpi_editor": [
+      "kpi_editor_design",
+      "viewer_limit_ds"
+    ],
+    "kpi_editor_design": [
+      "kpi_editor_design"
+    ],
+    "kpi_editor_manufacture": [
+      "kpi_editor_manufacture"
+    ],
+    "kpi_editor_system": [
+      "kpi_editor_system"
+    ],
+    "manufacture_group_kpi_editor": [
+      "kpi_editor_manufacture",
+      "viewer"
+    ],
+    "project_leader": [
+      "viewer_limit_ds",
+      "viewer_limit_m"
+    ],
+    "quality_head_design": [
+      "quality_head_design"
+    ],
+    "quality_head_manufacture": [
+      "quality_head_manufacture"
+    ],
+    "quality_head_system": [
+      "quality_head_system"
+    ],
+    "system_group_kpi_editor": [
+      "kpi_editor_system",
+      "viewer_limit_ds"
+    ],
+    "viewer": [
+      "viewer"
+    ],
+    "viewer_limit_ds": [
+      "viewer_limit_ds"
+    ],
+    "viewer_limit_m": [
+      "viewer_limit_m"
+    ]
   }
 }
 ```
