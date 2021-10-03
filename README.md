@@ -29,7 +29,6 @@ curl -X PUT http://localhost:8181/v1/data/rbac/authz/acl --data-binary @data.jso
 
 See the data with `JSON` format:
 
-[embedmd]:# (data.json)
 ```json
 {
   "group_roles": {
@@ -177,7 +176,6 @@ curl -X PUT http://localhost:8181/v1/policies/rbac.authz --data-binary @rbac.aut
 
 See the rego data
 
-[embedmd]:# (rbac.authz.rego)
 ```rego
 package rbac.authz
 
@@ -188,20 +186,20 @@ import input
 default allow = false
 
 allow {
-	# lookup the list of roles for the user
-	roles := acl.group_roles[input.user[_]]
+  # lookup the list of roles for the user
+  roles := acl.group_roles[input.user[_]]
 
-	# for each role in that list
-	r := roles[_]
+  # for each role in that list
+  r := roles[_]
 
-	# lookup the permissions list for role r
-	permissions := acl.role_permissions[r]
+  # lookup the permissions list for role r
+  permissions := acl.role_permissions[r]
 
-	# for each permission
-	p := permissions[_]
+  # for each permission
+  p := permissions[_]
 
-	# check if the permission granted to r matches the user's request
-	p == {"action": input.action, "object": input.object}
+  # check if the permission granted to r matches the user's request
+  p == {"action": input.action, "object": input.object}
 }
 ```
 
@@ -241,7 +239,6 @@ Content-Length: 15
 
 See the input data with `JSON` format.
 
-[embedmd]:# (input.json)
 ```json
 {
   "input": {
@@ -254,51 +251,50 @@ See the input data with `JSON` format.
 
 or testing in golang:
 
-[embedmd]:# (main.go)
 ```go
 package main
 
 import (
-	"bytes"
-	_ "embed"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+  "bytes"
+  _ "embed"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "time"
 )
 
 //go:embed input.json
 var input []byte
 
 func main() {
-	url := "http://localhost:8181/v1/data/rbac/authz/allow"
-	method := "POST"
+  url := "http://localhost:8181/v1/data/rbac/authz/allow"
+  method := "POST"
 
-	payload := bytes.NewReader(input)
+  payload := bytes.NewReader(input)
 
-	client := &http.Client{
-		Timeout: 5 * time.Second,
-	}
-	req, err := http.NewRequest(method, url, payload)
+  client := &http.Client{
+    Timeout: 5 * time.Second,
+  }
+  req, err := http.NewRequest(method, url, payload)
 
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	req.Header.Add("Content-Type", "application/json")
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  req.Header.Add("Content-Type", "application/json")
 
-	res, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer res.Body.Close()
+  res, err := client.Do(req)
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  defer res.Body.Close()
 
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(string(body))
+  body, err := ioutil.ReadAll(res.Body)
+  if err != nil {
+    fmt.Println(err)
+    return
+  }
+  fmt.Println(string(body))
 }
 ```
